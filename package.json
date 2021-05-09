@@ -7,8 +7,6 @@
   "scripts": {
     "docs:dev": "webpack serve --config ./docs/webpack.config.js",
     "build": "webpack --config _scripts/webpack.config.js",
-    "build:pack-build": "rollup -c ./_scripts/rollup.config.build.js",
-    "build:scss": "gulp --gulpfile packages/theme-thunk/gulpfile.js"
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
