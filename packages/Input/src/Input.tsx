@@ -11,7 +11,8 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size
     setValueCallback?: (v: string) => void; //父组件接管受控组件 父组件value属性做state
     value?: string | undefined; //父组件接管状态是状态
     height?: string; //组件高度
-    size?: ISzie
+    size?: ISzie;
+    label?: string;
 }
 /**
 * @desc: 文本输入框
@@ -34,6 +35,7 @@ function Input(props: InputProps) {
         height,
         className,
         size,
+        label,
         ...restProps
     } = props;
     const [inputvalue, setValue] = useState(defaultValue || '')
@@ -43,32 +45,36 @@ function Input(props: InputProps) {
         [`i-input-${size}`]: size
     })
     return (
-        <div className={clasess} style={style}>
-            {
-                prepend && (
-                    <div className="i-input-group-prepend" >
-                        {prepend}
+        <>
+            {label && <label style={{ margin: '0 10px', fontSize: 14 }}>{label}</label>}
+            <div className={clasess} style={style}>
+
+                {
+                    prepend && (
+                        <div className="i-input-group-prepend" >
+                            {prepend}
+                        </div>
+                    )
+                }
+                <input
+                    ref={ref} disabled={disabled}
+                    value={setValueCallback ? value : inputvalue}
+                    onChange={(e) => {
+                        setValueCallback ? setValueCallback(e.target.value) : setValue(e.target.value);
+                        if (callback) callback(e);
+                    }}
+                    {...restProps}
+                />
+                {append && (
+                    <div className="i-input-group-append">
+                        {append}
                     </div>
-                )
-            }
-            <input 
-                ref={ref} disabled={disabled}
-                value={setValueCallback ? value : inputvalue}
-                onChange={(e) => {
-                    setValueCallback ? setValueCallback(e.target.value) : setValue(e.target.value);
-                    if (callback) callback(e);
-                }}
-                {...restProps}
-            />
-            {append && (
-                <div className="i-input-group-append">
-                    {append}
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     )
 }
-interface ItextAreaProps extends Omit<InputHTMLAttributes<HTMLElement>,'size'> {
+interface ItextAreaProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
     disabled?: boolean;
     style?: React.CSSProperties;
     callback?: (e: ChangeEvent<HTMLElement>) => void;
@@ -80,8 +86,9 @@ interface ItextAreaProps extends Omit<InputHTMLAttributes<HTMLElement>,'size'> {
     className?: string,
     width?: string;
     rows?: number;
-    size?: ISzie
-    
+    size?: ISzie;
+    label?: string;
+
 }
 /**
 * @desc: 富文本输入框
@@ -105,7 +112,7 @@ const TextArea = (props: ItextAreaProps) => {
         ...restProps
     } = props;
     let ref = useRef(null);
-    const [TextAreaValue,setValue] = useState(defaultValue|| '')
+    const [TextAreaValue, setValue] = useState(defaultValue || '')
     const clasess = classNames('i-input', className, {
         ['is-disabled']: disabled
     })
@@ -114,9 +121,9 @@ const TextArea = (props: ItextAreaProps) => {
             <textarea className={clasess} style={{ width }} disabled={disabled}
                 value={setValueCallback ? value : TextAreaValue}
                 ref={ref}
-                onChange={(e)=>{
+                onChange={(e) => {
                     setValueCallback ? setValueCallback(e.target.value) : setValue(e.target.value);
-                    if(callback) callback(e);
+                    if (callback) callback(e);
                 }}
                 {...restProps}
             ></textarea>
@@ -126,8 +133,9 @@ const TextArea = (props: ItextAreaProps) => {
 }
 
 // visibilityToggle
-interface IPassword extends ItextAreaProps{
-    visibilityToggle?:boolean
+interface IPassword extends ItextAreaProps {
+    visibilityToggle?: boolean;
+    label?: string;
 }
 /**
 * @desc: 密码框
@@ -149,33 +157,37 @@ const Password: React.FC<IPassword> = (props) => {
         className,
         size,
         visibilityToggle,
+        label,
         ...restProps
     } = props;
     let ref = useRef(null);
-    const [passwordValue,setValue] = useState(defaultValue || '');
+    const [passwordValue, setValue] = useState(defaultValue || '');
     const clasess = classNames('i-input', className, {
         ['is-disabled']: disabled,
         [`i-input-${size}`]: size
     })
     return (
-        <div className={`i-input-passowrd ${disabled ? 'is-disabled' : ''}`}  style={style}>
-            <input type="password" defaultValue="33" className={clasess} 
-            value={setValueCallback ? value : passwordValue}
-            ref={ref}
-            onChange = {(e)=>{
-                setValueCallback? setValueCallback(e.target.value) : setValue(e.target.value);
-                if(callback) callback(e)
-            }}
-            {...restProps}
-            />
-            {
-                visibilityToggle && (
-                    <>
-                        <i className="i-ui-icons i-icon-yif">2</i>
-                    </>
-                )
-            }
-        </div>
+        <>
+            {label && <label style={{ margin: '0 10px', fontSize: 14 }}>{label}</label>}
+            <div className={`i-input-passowrd ${disabled ? 'is-disabled' : ''}`} style={style}>
+                <input type="password" className={clasess}
+                    value={setValueCallback ? value : passwordValue}
+                    ref={ref}
+                    onChange={(e) => {
+                        setValueCallback ? setValueCallback(e.target.value) : setValue(e.target.value);
+                        if (callback) callback(e)
+                    }}
+                    {...restProps}
+                />
+                {
+                    visibilityToggle && (
+                        <>
+                            <i className="i-ui-icons i-icon-yif">2</i>
+                        </>
+                    )
+                }
+            </div>
+        </>
     )
 }
 TextArea.defaultProps = {

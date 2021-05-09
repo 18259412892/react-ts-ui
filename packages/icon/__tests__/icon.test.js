@@ -2,6 +2,6 @@
 
 const icon = require('..');
 
-describe('icon', () => {
+describe('Icon', () => {
     it('needs tests');
 });

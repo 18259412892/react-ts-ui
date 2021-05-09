@@ -1,6 +1,6 @@
 
 export * from '@t-ui/button';
-export * from '@t-ui/icon';
+export * from '@t-ui/Icon';
 export * from '@t-ui/Menu';
 export * from '@t-ui/Message';
 export * from '@t-ui/Row';

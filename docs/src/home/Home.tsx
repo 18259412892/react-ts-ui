@@ -9,11 +9,11 @@ import DomMenu from '../dom/DomMenu';
 import DomeHome from '../dom/DomeHome';
 import DomTabs from '../dom/DomTabs';
 import DomUpload from '../dom/DomUpload';
-import { Menu, Layout } from '../../../packages/t-ui';
+import { Menu, Layout } from 't-ui';
 import DomLayout from '../dom/DomLayout';
-import { Input } from 't-ui';
 import DomInput from '../dom/DomInput';
 import DomForm from '../dom/DomForm';
+import DomIcon from '../dom/DomIcon.tsx';
 const { Header, Sider, Content, Footer } = Layout
 export default function Home(props) {
     return (
@@ -34,6 +34,9 @@ export default function Home(props) {
                                     </Menu.Item>
                                     <Menu.Item index="1" >
                                         <Link to={{ pathname: '/button' }}>Button</Link>
+                                    </Menu.Item>
+                                    <Menu.Item index="1" >
+                                        <Link to={{ pathname: '/icon' }}>Icon</Link>
                                     </Menu.Item>
                                     <Menu.Item index="2" >
                                         <Link to={{ pathname: '/message' }}>Message</Link>
@@ -62,6 +65,7 @@ export default function Home(props) {
                                 <Route exact path='/' component={DomeHome}></Route>
                                 <Route exact path='/home' component={DomeHome}></Route>
                                 <Route exact path='/button' component={DomButton}></Route>
+                                <Route exact path='/icon' component={DomIcon}></Route>
                                 <Route exact path='/message' component={DomMessage}></Route>
                                 <Route exact path='/row' component={DomRow}></Route>
                                 <Route exact path='/menu' component={DomMenu}></Route>
